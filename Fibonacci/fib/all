@@ -1,0 +1,76 @@
+---------------------------------------------------------------------------
+1️⃣ Iterative Version
+public static long fibIterative(int n) {
+    long prev = 0;
+    long current = 1;
+    
+    for (int i = 0; i < n; i++) {
+        long next = prev + current;
+        prev = current;
+        current = next;
+    }
+    
+    return prev; // F(n)
+}
+---------------------------------------------------------------------------
+2️⃣ Two-Step Iteration
+public static long fibTwoStep(int n) {
+    long f1 = 0;
+    long f2 = 1;
+
+    for (int i = 0; i < n / 2; i++) {
+        long temp1 = f1 + f2;
+        long temp2 = f2 + temp1;
+        f1 = temp1;
+        f2 = temp2;
+    }
+
+    if (n % 2 == 0) return f1;
+    else return f2;
+}
+---------------------------------------------------------------------------
+3️⃣ Recursive + Memoization
+public static long fibMemo(int n, long[] memo) {
+    if (n <= 1) return n;
+    if (memo[n] != 0) return memo[n];
+    
+    memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
+    return memo[n];
+}
+---------------------------------------------------------------------------
+4️⃣ Fast Doubling (Recursive)
+public static long[] fibFastDoubling(long n) {
+    if (n == 0) return new long[]{0, 1};
+
+    long[] half = fibFastDoubling(n / 2);
+    long f_k = half[0];
+    long f_k_plus_1 = half[1];
+
+    long f_2k = f_k * (2 * f_k_plus_1 - f_k);
+    long f_2k_plus_1 = f_k * f_k + f_k_plus_1 * f_k_plus_1;
+
+    if (n % 2 == 0) return new long[]{f_2k, f_2k_plus_1};
+    else return new long[]{f_2k_plus_1, f_2k + f_2k_plus_1};
+}
+---------------------------------------------------------------------------
+5️⃣ Binet Formula (Approximation)
+public static long fibBinet(int n) {
+    double phi = (1 + Math.sqrt(5)) / 2;
+    return Math.round(Math.pow(phi, n) / Math.sqrt(5));
+}
+---------------------------------------------------------------------------
+6️⃣ BigInteger Version (Safe for Large n)
+import java.math.BigInteger;
+
+public static BigInteger fibBig(int n) {
+    BigInteger prev = BigInteger.ZERO;
+    BigInteger current = BigInteger.ONE;
+
+    for (int i = 0; i < n; i++) {
+        BigInteger next = prev.add(current);
+        prev = current;
+        current = next;
+    }
+
+    return prev;
+}
