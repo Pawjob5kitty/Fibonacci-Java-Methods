@@ -1,0 +1,13 @@
+1️⃣ Iterative Version
+public static long fibIterative(int n) {
+    long prev = 0;
+    long current = 1;
+    
+    for (int i = 0; i < n; i++) {
+        long next = prev + current;
+        prev = current;
+        current = next;
+    }
+    
+    return prev; // F(n)
+}
